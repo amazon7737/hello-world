@@ -6,7 +6,6 @@ pipeline {
         IMAGE_TAG = "build-${env.BUILD_NUMBER}"
     }
 
-    
     stages {
         stage('Clone Repository') {
             steps {
