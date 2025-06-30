@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = "hello-world-image/spring-app"
+        IMAGE_NAME = "amazon7737/hello-world-image"
         IMAGE_TAG = "build-${env.BUILD_NUMBER}"
     }
 
