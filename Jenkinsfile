@@ -4,9 +4,10 @@ pipeline {
     environment {
         IMAGE_NAME = "amazon7737/hello-world-image"
         IMAGE_TAG = "build-${env.BUILD_NUMBER}"
+        REMOTE_HOST = "146.56.98.224"
+        REMOTE_DIR = "/home/user/app"
     }
 
-    
     stages {
         stage('Clone Repository') {
             steps {
@@ -16,7 +17,6 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building from GitHub!'
-                // 예시: 빌드 스크립트 실행 (필요하면 실제 빌드 커맨드로 교체)
                 sh './gradlew clean build'
             }
         }
@@ -35,14 +35,28 @@ pipeline {
                 }
             }
         }
+        stage('Deploy to Remote Server') {
+            steps {
+                sshagent(credentials: ['remote-server']) {
+                    sh """
+                        ssh -o StrictHostKeyChecking=no user@${REMOTE_HOST} '
+                            cd ${REMOTE_DIR} &&
+                            docker pull ${IMAGE_NAME}:${IMAGE_TAG} &&
+                            docker-compose down &&
+                            IMAGE_TAG=${IMAGE_TAG} docker-compose up -d
+                            '
+                        """
+                }
+            }
+        }
     }
 
     post {
         success {
-            echo "✅ Docker image pushed: ${IMAGE_NAME}:${IMAGE_TAG}"
+            echo "✅ Successfully deployed: ${IMAGE_NAME}:${IMAGE_TAG}"
         }
         failure {
-            echo "❌ Build or push failed."
+            echo "❌ Deployment failed."
         }
     }
 }
