@@ -5,7 +5,7 @@ pipeline {
         IMAGE_NAME = "amazon7737/hello-world-image"
         IMAGE_TAG = "build-${env.BUILD_NUMBER}"
         REMOTE_HOST = "146.56.98.224"
-        REMOTE_DIR = "/home/user/app"
+        REMOTE_DIR = "/home/ubuntu"
     }
 
     stages {
