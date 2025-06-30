@@ -1,12 +1,12 @@
 version: '3'
 services:
   jenkins:
-    image: jenkins/jenkins:lts
+    image: jenkins-with-docker:latest
     volumes:
-      - jenkins_home:/var/jenkins_home
+      - /Users/mini14/File/jenkins_home_backup:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock   # 이 부분이 필수
     ports:
       - "8080:8080"
       - "50000:50000"
 volumes:
-  jenkins_home:
+  jenkins_home_backup:
