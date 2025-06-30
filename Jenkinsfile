@@ -39,7 +39,7 @@ pipeline {
             steps {
                 sshagent(credentials: ['remote-server']) {
                     sh """
-                        ssh -o StrictHostKeyChecking=no user@${REMOTE_HOST} '
+                        ssh -o StrictHostKeyChecking=no ubuntu@${REMOTE_HOST} '
                             cd ${REMOTE_DIR} &&
                             docker pull ${IMAGE_NAME}:${IMAGE_TAG} &&
                             docker-compose down &&
