@@ -10,6 +10,6 @@ public class Controller {
 
     @GetMapping
     public String load() {
-        return "hello world?!!!";
+        return "hello world?";
     }
 }
