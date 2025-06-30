@@ -17,7 +17,7 @@ pipeline {
             steps {
                 echo 'Building from GitHub!'
                 // 예시: 빌드 스크립트 실행 (필요하면 실제 빌드 커맨드로 교체)
-                // sh './gradlew clean build'
+                sh './gradlew clean build'
             }
         }
         stage('Build Docker Image') {
