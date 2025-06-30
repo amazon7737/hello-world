@@ -37,15 +37,15 @@ pipeline {
         }
         stage('Deploy to Remote Server') {
             steps {
-                sshagent(credentials: ['remote-server']) {
+                withCredentials([file(credentialsId: 'remote-server-key', variable: 'PRIVATE_KEY')]) {
                     sh """
-                        ssh -o StrictHostKeyChecking=no ubuntu@${REMOTE_HOST} '
-                            cd ${REMOTE_DIR} &&
-                            docker pull ${IMAGE_NAME}:${IMAGE_TAG} &&
-                            docker-compose down &&
-                            IMAGE_TAG=${IMAGE_TAG} docker-compose up -d
-                            '
-                        """
+                        ssh -o StrictHostKeyChecking=no -i $PRIVATE_KEY ubuntu@${REMOTE_HOST} '
+                        cd ${REMOTE_DIR} &&
+                        docker pull ${IMAGE_NAME}:${IMAGE_TAG} &&
+                        docker-compose down &&
+                        IMAGE_TAG=${IMAGE_TAG} docker-compose up -d
+                        '
+                    """
                 }
             }
         }
