@@ -11,7 +11,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git branch: 'main', url: 'https://github.com/amazon7737/hello-world.git'
+                git branch: 'main', url: 'https://github.com/daangnnnn/test-jenkins.git'
             }
         }
         stage('Build') {
